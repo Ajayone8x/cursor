@@ -15,15 +15,20 @@
 
     <style>
         :root {
-            --bg-color: #121212;
-            --primary-red: #e50914; 
-            --primary-red-dark: #b91c1c;
-            --card-bg: #1e1e1e;
-            --text-light: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border-color: #2d2d2d;
-            --popup-bg: #282828;
-            --popup-shadow-color: rgba(229, 9, 20, 0.4);
+            /* Premium blue theme */
+            --bg-color: #0b1830;
+            --header-pill: linear-gradient(180deg,#0d2a5a,#0a1f44);
+            --panel-bg: linear-gradient(180deg,#0d2a5a,#0a224c);
+            --panel-border: #153568;
+            --accent: #1e78ff;
+            --accent-2: #78a6ff;
+            --text-light: #eaf2ff;
+            --text-muted: #b9cae6;
+            --card-bg: #0f223f;
+            --border-color: #153568;
+            --popup-bg: #0f223f;
+            --popup-shadow-color: rgba(30, 120, 255, 0.35);
+            --danger: #e50914;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -45,26 +50,29 @@
         }
         @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
         .stream-header {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1.25rem;
-            border-radius: 12px;
+            background: var(--header-pill);
+            border: 1px solid var(--panel-border);
+            padding: 0.9rem 1.25rem;
+            border-radius: 999px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 1rem;
+            margin: 0 auto 1rem;
+            max-width: 900px;
+            box-shadow: 0 8px 28px rgba(10,31,68,0.35);
         }
-        .stream-header h1 { font-size: 1.25rem; font-weight: 600; }
+        .stream-header h1 { font-size: 1.1rem; font-weight: 600; color: var(--text-light); letter-spacing: .3px; }
         .live-badge {
-            background-color: var(--primary-red);
+            background: radial-gradient(100% 100% at 50% 0%, #ff3b3b 0%, #ba1a1a 100%);
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.4rem;
+            margin-left: .6rem;
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
@@ -74,76 +82,24 @@
         }
         #player-container {
             width: 100%;
-            height: 50vh;
-            max-height: 600px;
+            height: 52vh;
+            max-height: 660px;
             background-color: #000;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
+            box-shadow: 0 18px 38px rgba(10,31,68,0.45);
+            border-radius: 14px;
             overflow: hidden;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid var(--panel-border);
         }
-        /* Neon glow ring with subtle animated shimmer */
-        #player-container::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: 18px;
-            background: conic-gradient(from 180deg, rgba(229,9,20,0.18), rgba(255,255,255,0.06), rgba(229,9,20,0.18));
-            filter: blur(14px);
-            z-index: 0;
-            animation: shimmer 6s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes shimmer { to { transform: rotate(360deg); } }
-        /* Glassy control bar */
-        .shaka-controls-container {
-            backdrop-filter: blur(8px);
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 100%) !important;
-        }
-        .shaka-seek-bar-container, .shaka-volume-bar-container {
-            border-radius: 999px !important;
-            overflow: hidden;
-        }
-        .shaka-bottom-controls {
-            padding: 8px 12px !important;
-        }
-        /* Minimal buffering badge */
-        .buffering-badge {
-            position: absolute;
-            top: 12px; right: 12px;
-            z-index: 5;
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: 12px;
-            background: rgba(229,9,20,0.18);
-            color: #fff;
-            border: 1px solid rgba(229,9,20,0.35);
-            display: none;
-        }
-        /* Tiny toast */
-        .toast {
-            position: absolute;
-            left: 50%; bottom: 64px;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            opacity: 0; pointer-events: none;
-            transition: opacity .2s ease;
-            z-index: 6;
-        }
-        .toast.show { opacity: 1; }
+        .grid-panels { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+        @media (min-width: 900px) { .grid-panels { grid-template-columns: 1fr 1fr; } }
         .info-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
             padding: 1.25rem;
             margin-top: 1rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(10,31,68,0.35);
         }
         .info-card h2 {
             font-size: 1rem;
@@ -162,9 +118,9 @@
             gap: 0.75rem;
             width: 100%;
             padding: 0.8rem 1rem;
-            border-radius: 8px;
-            background: linear-gradient(90deg, var(--primary-red), var(--primary-red-dark));
-            color: white;
+            border-radius: 10px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2));
+            color: #02122b;
             font-weight: 600;
             text-decoration: none;
             border: none;
@@ -173,9 +129,9 @@
         }
         .action-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px var(--popup-shadow-color);
+            box-shadow: 0 10px 20px var(--popup-shadow-color);
         }
-        .action-button.copied { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .action-button.copied { background: linear-gradient(90deg, #22c55e, #a5f3ac); color: #05230f; }
         .back-link {
             display: inline-block;
             width: 100%;
@@ -195,7 +151,7 @@
              border: 1px solid var(--border-color);
              border-radius: 12px;
         }
-        .error-message h2 { color: var(--primary-red); font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .error-message h2 { color: var(--danger); font-size: 1.5rem; margin-bottom: 0.5rem; }
         .telegram-popup {
             position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
@@ -284,8 +240,8 @@
         function renderIframeUI(data) {
             const contentDiv = document.getElementById('stream-content');
             contentDiv.innerHTML = `
-                <div class="stream-header"><h1>${data.name}</h1><div class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</div></div>
-                <div id="player-container">
+                <div class=\"stream-header\"><h1>${data.name}</h1><span class=\"live-badge\"><i class=\"fa-solid fa-circle\"></i> LIVE</span></div>
+                <div id=\"player-container\">
                     <iframe 
                         src="${data.iframeSrc}" 
                         style="width:100%; height:100%; border:0;" 
@@ -293,8 +249,10 @@
                         allowfullscreen>
                     </iframe>
                 </div>
-                <div class="info-card"><h2><i class="fa-solid fa-bell"></i> Follow us for Updates!</h2><a href="https://t.me/allrounderlive" target="_blank" rel="noopener" class="action-button"><i class="fa-brands fa-telegram"></i> Click Here To Join Telegram</a></div>
-                <div class="info-card"><h2><i class="fa-solid fa-link"></i> Copy Link & Share</h2><button class="action-button" id="shareButton"><i class="fa-solid fa-share-nodes"></i> Click Here To Share This Page Link</button></div>
+                <div class=\"grid-panels\">
+                    <div class=\"info-card\"><h2><i class=\"fa-solid fa-bell\"></i> Follow us for Updates!</h2><a href=\"https://t.me/allrounderlive\" target=\"_blank\" rel=\"noopener\" class=\"action-button\"><i class=\"fa-brands fa-telegram\"></i> Click Here To Join Telegram</a></div>
+                    <div class=\"info-card\"><h2><i class=\"fa-solid fa-link\"></i> Copy Link & Share</h2><button class=\"action-button\" id=\"shareButton\"><i class=\"fa-solid fa-share-nodes\"></i> Click Here To Share This Page Link</button></div>
+                </div>
                 <a href="#" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to All Streams</a>
             `;
             document.getElementById('shareButton').addEventListener('click', copyAndShare);
@@ -303,15 +261,15 @@
         function renderPlayerUI(data) {
             const contentDiv = document.getElementById('stream-content');
             contentDiv.innerHTML = `
-                <div class="stream-header"><h1>${data.name}</h1><div class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</div></div>
-                <div id="player-container" data-shaka-player-container>
-                    <div class="buffering-badge" id="bufferingBadge">Optimizing…</div>
-                    <div class="toast" id="playerToast"></div>
-                    <video id="video-player" style="width:100%;height:100%;" autoplay playsinline data-shaka-player></video>
+                <div class=\"stream-header\"><h1>${data.name}</h1><span class=\"live-badge\"><i class=\"fa-solid fa-circle\"></i> LIVE</span></div>
+                <div id=\"player-container\" data-shaka-player-container>
+                    <video id=\"video-player\" style=\"width:100%;height:100%;\" autoplay playsinline data-shaka-player></video>
                 </div>
-                <div class="info-card"><h2><i class="fa-solid fa-bell"></i> Follow us for Updates!</h2><a href="https://t.me/allrounderlive" target="_blank" rel="noopener" class="action-button"><i class="fa-brands fa-telegram"></i> Click Here To Join Telegram</a></div>
-                <div class="info-card"><h2><i class="fa-solid fa-link"></i> Copy Link & Share</h2><button class="action-button" id="shareButton"><i class="fa-solid fa-share-nodes"></i> Click Here To Share This Page Link</button></div>
-                <a href="#" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to All Streams</a>
+                <div class=\"grid-panels\">
+                    <div class=\"info-card\"><h2><i class=\"fa-solid fa-bell\"></i> Follow us for Updates!</h2><a href=\"https://t.me/allrounderlive\" target=\"_blank\" rel=\"noopener\" class=\"action-button\"><i class=\"fa-brands fa-telegram\"></i> Click Here To Join Telegram</a></div>
+                    <div class=\"info-card\"><h2><i class=\"fa-solid fa-link\"></i> Copy Link & Share</h2><button class=\"action-button\" id=\"shareButton\"><i class=\"fa-solid fa-share-nodes\"></i> Click Here To Share This Page Link</button></div>
+                </div>
+                <a href=\"#\" class=\"back-link\"><i class=\"fa-solid fa-arrow-left\"></i> Back to All Streams</a>
             `;
             document.getElementById('shareButton').addEventListener('click', copyAndShare);
         }
@@ -346,23 +304,22 @@
             await player.attach(video);
             const ui = new shaka.ui.Overlay(player, container, video);
 
-            // Smooth playback defaults: prioritize stability over ultra-low latency
+            // Smooth playback defaults: keep UI as before, only safe streaming tweaks
             player.configure({
                 drm: { clearKeys: { [data.keyId]: data.key } },
                 abr: {
                     enabled: true,
-                    defaultBandwidthEstimate: 3500000,
-                    switchInterval: 2
+                    defaultBandwidthEstimate: 1200000,
+                    switchInterval: 2,
+                    bandwidthUpgradeTarget: 0.85,
+                    bandwidthDowngradeTarget: 0.95
                 },
-                restrictions: {
-                    // Cap at 720p by default for smoother playback; user can override via Quality menu
-                    maxHeight: 720
-                },
+                restrictions: { maxHeight: 720 },
                 streaming: {
                     lowLatencyMode: false,
                     autoLowLatencyMode: false,
-                    bufferingGoal: 30,          // seconds to buffer ahead
-                    rebufferingGoal: 4,         // tolerate brief drops without rebuffering
+                    bufferingGoal: 30,
+                    rebufferingGoal: 3,
                     bufferBehind: 20,
                     jumpLargeGaps: true,
                     smallGapLimit: 0.5,
@@ -385,49 +342,22 @@
             });
 
             ui.configure({
-                'addBigPlayButton': true,
-                'controlPanelElements': [
-                    "play_pause", "time_and_duration", "mute", "volume", "spacer",
-                    "rewind", "fast_forward", "quality", "cast", "picture_in_picture",
-                    "airplay", "fullscreen", "overflow_menu"
-                ],
-                'seekBarColors': { base: 'rgba(255, 255, 255, 0.2)', buffered: 'rgba(255, 255, 255, 0.45)', played: 'var(--primary-red)' },
+                'controlPanelElements': ["play_pause", "time_and_duration", "mute", "volume", "spacer", "quality", "fullscreen", "overflow_menu"],
+                'seekBarColors': { base: 'rgba(255, 255, 255, 0.2)', buffered: 'rgba(255, 255, 255, 0.4)', played: 'var(--primary-red)' },
                 'volumeBarColors': { base: 'rgba(255, 255, 255, 0.4)', level: 'var(--primary-red)' }
             });
 
-            // Show short toast helper
-            const showToast = (text, ms = 1600) => {
-                const el = document.getElementById('playerToast');
-                if (!el) return;
-                el.textContent = text;
-                el.classList.add('show');
-                clearTimeout(el._t);
-                el._t = setTimeout(() => el.classList.remove('show'), ms);
-            };
-
-            // Stall/Buffering indicator and auto-recovery
-            const bufferingBadge = document.getElementById('bufferingBadge');
+            // If we hit buffering within first 20s, temporarily cap to 540p for stability
+            let cappedOnce = false;
             player.addEventListener('buffering', (e) => {
-                if (!bufferingBadge) return;
-                bufferingBadge.style.display = e.buffering ? 'inline-flex' : 'none';
-            });
-
-            // Try to hop over tiny gaps or stalls if readyState is stuck
-            let lastStallCheck = 0;
-            const stallCheck = () => {
-                const now = performance.now();
-                if (now - lastStallCheck < 1000) return; // throttle
-                lastStallCheck = now;
-                if (video.readyState < 3 && !video.paused) {
-                    video.currentTime = Math.min(video.currentTime + 0.75, (player.getPresentationStartTimeAsDate() ? video.duration : video.currentTime + 0.75));
+                if (!cappedOnce && e.buffering && performance.now() < 20000) {
+                    cappedOnce = true;
+                    try { player.configure({ restrictions: { maxHeight: 540 } }); } catch {}
                 }
-            };
-            const stallInterval = setInterval(stallCheck, 1200);
-            window.addEventListener('beforeunload', () => clearInterval(stallInterval));
+            });
 
             try {
                 await player.load(data.mpd);
-                showToast('Loaded • Auto quality up to 720p');
                 console.log('The video has been loaded successfully!');
             } catch (error) {
                 console.error('Error loading stream:', error);
