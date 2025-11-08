@@ -205,7 +205,7 @@
         async function initializeApp() {
             try {
                 // Step 1: Fetch the streams.json file
-                const response = await fetch('streams.json');
+                const response = await fetch('https://raw.githubusercontent.com/Ajayone8x/Alive/refs/heads/main/streams.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
